@@ -14,46 +14,61 @@ public class MovingObject : MonoBehaviour
     public int walkCount;
     private int currentWalkCount;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-
     private bool canMove = true;
 
+    private Animator animator;
+
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
+        animator = GetComponent<Animator>();
     }
     
     IEnumerator MoveCoroutine()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        while (Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0)
         {
-            applyRunSpeed = runSpeed;
-            applyRunFlag = true;
-        }
-        else
-        {
-            applyRunSpeed = 0;
-            applyRunFlag = false;
-        }
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                applyRunSpeed = runSpeed;
+                applyRunFlag = true;
+            }
+            else
+            {
+                applyRunSpeed = 0;
+                applyRunFlag = false;
+            }
 
-        direction.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), transform.position.z);
+            direction.Set(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"), transform.position.z);
 
-        currentWalkCount = 0;
-        while (currentWalkCount < walkCount)
-        {
             if (direction.x != 0)
             {
-                transform.Translate(direction.x * (speed + applyRunSpeed), 0, 0);
+                direction.y = 0;
             }
-            else if (direction.y != 0)
+
+            animator.SetFloat("DirX", direction.x);
+            animator.SetFloat("DirY", direction.y);
+            animator.SetBool("Walking", true);
+
+            currentWalkCount = 0;
+            while (currentWalkCount < walkCount)
             {
-                transform.Translate(0, direction.y * (speed + applyRunSpeed), 0);
-            }
-            if (applyRunFlag)
+                if (direction.x != 0)
+                {
+                    transform.Translate(direction.x * (speed + applyRunSpeed), 0, 0);
+                }
+                else if (direction.y != 0)
+                {
+                    transform.Translate(0, direction.y * (speed + applyRunSpeed), 0);
+                }
+                if (applyRunFlag)
+                    currentWalkCount++;
                 currentWalkCount++;
-            currentWalkCount++;
-            yield return new WaitForSeconds(0.01f);
+                yield return new WaitForSeconds(0.01f);
+            }
+
         }
+        animator.SetBool("Walking", false);
         canMove = true;
     }
 
