@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class MovingObject : MonoBehaviour
 {
+    private BoxCollider2D boxCollider;
+
+    // NOTE(jpyo0803): 어떤 Layer와 충돌했는지 알기 위해 필요
+    public LayerMask layerMask;
+
     public float speed;
 
     private Vector3 direction;
@@ -21,6 +26,7 @@ public class MovingObject : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        boxCollider = GetComponent<BoxCollider2D>();
         animator = GetComponent<Animator>();
     }
     
@@ -48,7 +54,26 @@ public class MovingObject : MonoBehaviour
 
             animator.SetFloat("DirX", direction.x);
             animator.SetFloat("DirY", direction.y);
+
+            RaycastHit2D hit;
+            // A지점에서 B지점으로 레이저를 쏨
+            // 만약 B지점까지 레이저가 도달하면 hit은 Null을 리턴
+            // 만약 B지점까지 가는 길목에 방해물이 있다면 방해물을 리턴
+
+            Vector2 start = transform.position; // A지점, 캐릭터의 현재 위치 값
+            Vector2 end = start + new Vector2(direction.x * speed * walkCount, direction.y * speed * walkCount); // B지점, 캐릭터가 이동하고자 하는 위치 값
+
+            hit = Physics2D.Linecast(start, end, layerMask);
+
+            boxCollider.enabled = false; // 캐릭터 스스로의 box collider에 레이저 충돌 방지하기 위해 잠깐 꺼둠
             animator.SetBool("Walking", true);
+            boxCollider.enabled = true; // 다시 킴 
+
+            if (hit.transform != null)
+            {
+                // 만약 방해물이 있다면 이후 작업하지 않음
+                break;
+            }
 
             currentWalkCount = 0;
             while (currentWalkCount < walkCount)
