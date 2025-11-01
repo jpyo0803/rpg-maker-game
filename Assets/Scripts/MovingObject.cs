@@ -69,14 +69,24 @@ public class MovingObject : MonoBehaviour
             animator.SetBool("Walking", true);
             boxCollider.enabled = true; // 다시 킴 
 
+            float allowedWalkCount = walkCount;
             if (hit.transform != null)
             {
-                // 만약 방해물이 있다면 이후 작업하지 않음
-                break;
+                float totalDistance = Vector2.Distance(start, end);
+                float ratio = hit.distance / totalDistance;
+                ratio = Mathf.Max(0f, ratio - 0.2f);
+                allowedWalkCount = Mathf.Floor(walkCount * ratio);
             }
 
+            if (allowedWalkCount < 1f)
+            {
+                animator.SetBool("Walking", false);
+                canMove = true;
+                yield break; // MoveCoroutine 완전히 종료
+            }
+            
             currentWalkCount = 0;
-            while (currentWalkCount < walkCount)
+            while (currentWalkCount < allowedWalkCount)
             {
                 if (direction.x != 0)
                 {
