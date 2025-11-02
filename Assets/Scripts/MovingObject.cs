@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class MovingObject : MonoBehaviour
 {
+    static public MovingObject instance;
+    public string currentMapName; // transferMap 스크립트에 있는 transferMapName 변수의 값을 저장 
     private BoxCollider2D boxCollider;
 
     // NOTE(jpyo0803): 어떤 Layer와 충돌했는지 알기 위해 필요
@@ -23,11 +25,25 @@ public class MovingObject : MonoBehaviour
 
     private Animator animator;
 
+    void Awake()
+    {
+        // StartPoint와 TransferMap 스크립트에서 MovingObject.instance로 접근을 보장 
+        if (instance == null)
+        {
+            DontDestroyOnLoad(this.gameObject); // Scene 전환이 일어나도 해당 객체는 파괴 x 
+            boxCollider = GetComponent<BoxCollider2D>();
+            animator = GetComponent<Animator>();
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }    
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        boxCollider = GetComponent<BoxCollider2D>();
-        animator = GetComponent<Animator>();
     }
     
     IEnumerator MoveCoroutine()

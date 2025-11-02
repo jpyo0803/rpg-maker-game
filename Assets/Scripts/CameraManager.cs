@@ -2,14 +2,28 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
+    static public CameraManager instance;
     public GameObject target; // 카메라가 따라갈 대상 
     public float moveSpeed; // 카메라가 얼마나 빠른 속도로 대상을 쫓을건지?
     private Vector3 targetPosition; // 대상의 현재 위치 값
 
+    void Awake()
+    {
+        // StartPoint와 TransferMap 스크립트에서 MovingObject.instance로 접근을 보장 
+        if (instance == null)
+        {
+            DontDestroyOnLoad(this.gameObject); // Scene 전환이 일어나도 해당 객체는 파괴 x 
+            instance = this;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }    
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
     }
 
     // Update is called once per frame
