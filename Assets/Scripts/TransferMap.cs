@@ -1,26 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 public class TransferMap : MonoBehaviour
 {
-    public string transferMapName;
+    public string transferMapName; // 이동할 맵 이름
 
     public Transform target;
+    public BoxCollider2D targetBound;
 
     private MovingObject thePlayer;
     private CameraManager theCamera;
 
-    public bool flag;
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // FindAnyObjectByType: Hierarchy에 있는 모든 객체의 <>컴포넌트를 검색해서 리턴
-        // GetComponent: 해당 스크립트가 속해있는 객체의 <>컴포넌트를 검색해서 리턴 
-        if (flag == false)
-        {
-            theCamera = CameraManager.instance;
-        }
+        // theCamera, thePlayer는 Awake에서 이미 초기화 되었으므로 바로 할당
+        theCamera = CameraManager.instance;
         thePlayer = MovingObject.instance;
     }
 
@@ -28,16 +24,13 @@ public class TransferMap : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            if (flag == true)
-            {
-                thePlayer.currentMapName = transferMapName;
-                SceneManager.LoadScene(transferMapName);
-            }
-            else
-            {
-                theCamera.transform.position = new Vector3(target.position.x, target.position.y, theCamera.transform.position.z);
-                thePlayer.transform.position = target.position;
-            }
+            thePlayer.currentMapName = transferMapName; // 이동할 맵 이름 저장
+
+            // 카메라 및 플레이어 위치 이동
+            theCamera.transform.position = new Vector3(target.position.x, target.position.y, theCamera.transform.position.z);
+            theCamera.SetBound(targetBound);
+
+            thePlayer.transform.position = target.position;
         }
     }
 }
