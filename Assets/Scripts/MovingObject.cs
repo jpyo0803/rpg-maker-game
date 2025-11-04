@@ -10,6 +10,13 @@ public class MovingObject : MonoBehaviour
     // NOTE(jpyo0803): 어떤 Layer와 충돌했는지 알기 위해 필요
     public LayerMask layerMask;
 
+    public string walkSound_1;
+    public string walkSound_2;
+    public string walkSound_3;
+    public string walkSound_4;
+
+    private AudioManager theAudio;
+
     public float speed;
 
     private Vector3 direction;
@@ -44,6 +51,7 @@ public class MovingObject : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        theAudio = AudioManager.instance;
     }
     
     IEnumerator MoveCoroutine()
@@ -100,7 +108,24 @@ public class MovingObject : MonoBehaviour
                 canMove = true;
                 yield break; // MoveCoroutine 완전히 종료
             }
-            
+
+            int temp = Random.Range(0, 4);
+            switch (temp)
+            {
+                case 0:
+                    theAudio.Play(walkSound_1);
+                    break;
+                case 1:
+                    theAudio.Play(walkSound_2);
+                    break;
+                case 2:
+                    theAudio.Play(walkSound_3);
+                    break;
+                case 3:
+                    theAudio.Play(walkSound_4);
+                    break;
+            }
+
             currentWalkCount = 0;
             while (currentWalkCount < allowedWalkCount)
             {
@@ -116,6 +141,8 @@ public class MovingObject : MonoBehaviour
                     currentWalkCount++;
                 currentWalkCount++;
                 yield return new WaitForSeconds(0.01f);
+
+
             }
 
         }
