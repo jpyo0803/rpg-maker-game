@@ -9,7 +9,7 @@ public class TransferMap : MonoBehaviour
     public Transform target;
     public BoxCollider2D targetBound;
 
-    private MovingObject thePlayer;
+    private PlayerManager thePlayer;
     private CameraManager theCamera;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,7 +17,7 @@ public class TransferMap : MonoBehaviour
     {
         // theCamera, thePlayer는 Awake에서 이미 초기화 되었으므로 바로 할당
         theCamera = CameraManager.instance;
-        thePlayer = MovingObject.instance;
+        thePlayer = PlayerManager.instance;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

@@ -3,7 +3,7 @@ using UnityEngine;
 public class StartPoint : MonoBehaviour
 {
     public string startPoint;
-    private MovingObject thePlayer;
+    private PlayerManager thePlayer;
     private CameraManager theCamera;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -11,7 +11,7 @@ public class StartPoint : MonoBehaviour
     {
         // FindAnyObjectByType 사용 x. 타이밍 이슈 발생 가능 (파괴될 수도 있는 객체를 참조할 수 있음)
         theCamera = CameraManager.instance;
-        thePlayer = MovingObject.instance;
+        thePlayer = PlayerManager.instance;
         
         Debug.Log("StartPoint: " + startPoint + ", CurrentMapName: " + thePlayer.currentMapName);
         if (startPoint == thePlayer.currentMapName)
