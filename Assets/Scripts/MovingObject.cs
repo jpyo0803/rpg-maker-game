@@ -1,15 +1,20 @@
 using System.Collections;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class MovingObject : MonoBehaviour
 {
+    public string characterName;
     // 공통 
     public float speed;
     protected Vector3 direction;
+
+    public Queue<string> queue; // 이동 명령어 큐
+
     public int walkCount;
     protected int currentWalkCount;
 
-    protected bool npcCanMove = true;
+    private bool coroutineDisabled = false;
 
     public Animator animator;
     public BoxCollider2D boxCollider;
@@ -17,58 +22,67 @@ public class MovingObject : MonoBehaviour
     // NOTE(jpyo0803): 어떤 Layer와 충돌했는지 알기 위해 필요
     public LayerMask layerMask;
 
-    protected void Move(string _dir, int _frequency)
+    public void Move(string _dir, int _frequency = 5)
     {
-        StartCoroutine(MoveCoroutine(_dir, _frequency));
+        queue.Enqueue(_dir);
+        if (!coroutineDisabled)
+        {
+            coroutineDisabled = true;
+            StartCoroutine(MoveCoroutine(_dir, _frequency));
+        }
     }
 
     IEnumerator MoveCoroutine(string _dir, int _frequency)
     {
-        npcCanMove = false;
-        direction.Set(0, 0, direction.z);
-        switch (_dir)
+        while (queue.Count > 0)
         {
-            case "Up":
-                direction.y = 1;
-                break;
-            case "Down":
-                direction.y = -1;
-                break;
-            case "Left":
-                direction.x = -1;
-                break;
-            case "Right":
-                direction.x = 1;
-                break;
+            string dir_str = queue.Dequeue();
+            direction.Set(0, 0, direction.z);
+            switch (dir_str)
+            {
+                case "Up":
+                    direction.y = 1;
+                    break;
+                case "Down":
+                    direction.y = -1;
+                    break;
+                case "Left":
+                    direction.x = -1;
+                    break;
+                case "Right":
+                    direction.x = 1;
+                    break;
+            }
+            print("Dir: " + _dir);
+
+            animator.SetFloat("DirX", direction.x);
+            animator.SetFloat("DirY", direction.y);
+            animator.SetBool("Walking", true);
+
+            float allowedWalkCount = this.GetAllowedWalkCount();
+
+            if (allowedWalkCount < 1f)
+            {
+                animator.SetBool("Walking", false);
+                yield break; // MoveCoroutine 완전히 종료
+            }
+
+            currentWalkCount = 0;
+            while (currentWalkCount < allowedWalkCount)
+            {
+                transform.Translate(direction.x * speed, direction.y * speed, 0);
+                currentWalkCount++;
+                yield return new WaitForSeconds(0.01f);
+            }
+
+            if (_frequency != 5)
+            {
+                animator.SetBool("Walking", false);
+            }
         }
-        print("Dir: " + _dir);
 
-        animator.SetFloat("DirX", direction.x);
-        animator.SetFloat("DirY", direction.y);
-        animator.SetBool("Walking", true);
-
-        float allowedWalkCount = this.GetAllowedWalkCount();
-
-        if (allowedWalkCount < 1f)
-        {
-            animator.SetBool("Walking", false);
-            npcCanMove = true;
-            yield break; // MoveCoroutine 완전히 종료
-        }
-
-        currentWalkCount = 0;
-        while (currentWalkCount < allowedWalkCount)
-        {
-            transform.Translate(direction.x * speed, direction.y * speed, 0);
-            currentWalkCount++;
-            yield return new WaitForSeconds(0.01f);
-        }
-
-        if (_frequency != 5)
-        {
-            animator.SetBool("Walking", false);
-        }
-        npcCanMove = true;
+        animator.SetBool("Walking", false);
+        coroutineDisabled = false;
     }
     
     protected int GetAllowedWalkCount()

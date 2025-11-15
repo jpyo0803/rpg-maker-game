@@ -1,7 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
-
+using System.Collections.Generic;
 
 [System.Serializable]
 public class NPCMove
@@ -22,7 +22,8 @@ public class NPCManager : MovingObject
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(MoveCoroutine());
+        queue = new Queue<string>();
+        // StartCoroutine(MoveCoroutine());
     }
 
     public void SetMove()
@@ -32,7 +33,7 @@ public class NPCManager : MovingObject
 
     public void SetNotMove()
     {
-
+        StopAllCoroutines();
     }
     
     IEnumerator MoveCoroutine()
@@ -59,7 +60,7 @@ public class NPCManager : MovingObject
                         break;
                 }
 
-                yield return new WaitUntil(() => npcCanMove == true);
+                yield return new WaitUntil(() => queue.Count < 2);
 
                 base.Move(npcMove.direction[i], npcMove.frequency);
 

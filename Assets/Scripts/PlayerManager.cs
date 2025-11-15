@@ -1,6 +1,7 @@
 using UnityEngine;
 
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerManager : MovingObject
 {
@@ -40,6 +41,7 @@ public class PlayerManager : MovingObject
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        queue = new Queue<string>();
         theAudio = AudioManager.instance;
     }
 
