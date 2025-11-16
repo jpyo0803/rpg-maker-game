@@ -36,6 +36,24 @@ public class MovingObject : MonoBehaviour
     {
         while (queue.Count > 0)
         {
+            switch (_frequency)
+            {
+                case 1:
+                    yield return new WaitForSeconds(4.0f);
+                    break;
+                case 2:
+                    yield return new WaitForSeconds(3.0f);
+                    break;
+                case 3:
+                    yield return new WaitForSeconds(2.0f);
+                    break;
+                case 4:
+                    yield return new WaitForSeconds(1.0f);
+                    break;
+                case 5:
+                    break;
+            }
+
             string dir_str = queue.Dequeue();
             direction.Set(0, 0, direction.z);
             switch (dir_str)
@@ -57,21 +75,33 @@ public class MovingObject : MonoBehaviour
 
             animator.SetFloat("DirX", direction.x);
             animator.SetFloat("DirY", direction.y);
+
+            int allowedWalkCount;
+            while (true) {
+                allowedWalkCount = this.GetAllowedWalkCount();
+                if (allowedWalkCount < 1)
+                {
+                    animator.SetBool("Walking", false);
+                    yield return new WaitForSeconds(1f);
+                } 
+                else
+                {
+                    break;    
+                }
+            }
             animator.SetBool("Walking", true);
 
-            float allowedWalkCount = this.GetAllowedWalkCount();
-
-            if (allowedWalkCount < 1f)
-            {
-                animator.SetBool("Walking", false);
-                yield break; // MoveCoroutine 완전히 종료
-            }
+            boxCollider.offset = new Vector2(direction.x * 0.7f * speed * walkCount, direction.y * 0.7f * speed * walkCount);
 
             currentWalkCount = 0;
             while (currentWalkCount < allowedWalkCount)
             {
                 transform.Translate(direction.x * speed, direction.y * speed, 0);
                 currentWalkCount++;
+                if (currentWalkCount == allowedWalkCount / 2)
+                {
+                    boxCollider.offset = Vector2.zero;
+                }
                 yield return new WaitForSeconds(0.01f);
             }
 
@@ -95,9 +125,9 @@ public class MovingObject : MonoBehaviour
         Vector2 start = transform.position; // A지점, 캐릭터의 현재 위치 값
         Vector2 end = start + new Vector2(direction.x * speed * walkCount, direction.y * speed * walkCount); // B지점, 캐릭터가 이동하고자 하는 위치 값
 
+        boxCollider.enabled = false; // 캐릭터 스스로의 box collider에 레이저 충돌 방지하기 위해 잠깐 꺼둠
         hit = Physics2D.Linecast(start, end, layerMask);
 
-        boxCollider.enabled = false; // 캐릭터 스스로의 box collider에 레이저 충돌 방지하기 위해 잠깐 꺼둠
         animator.SetBool("Walking", true);
         boxCollider.enabled = true; // 다시 킴 
 

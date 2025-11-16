@@ -95,6 +95,8 @@ public class PlayerManager : MovingObject
                     break;
             }
 
+            boxCollider.offset = new Vector2(direction.x * 0.7f * speed * walkCount, direction.y * 0.7f * speed * walkCount);
+
             currentWalkCount = 0;
             while (currentWalkCount < allowedWalkCount)
             {
@@ -109,6 +111,10 @@ public class PlayerManager : MovingObject
                 if (applyRunFlag)
                     currentWalkCount++;
                 currentWalkCount++;
+                if (currentWalkCount == allowedWalkCount / 2)
+                {
+                    boxCollider.offset = Vector2.zero;
+                }
                 yield return new WaitForSeconds(0.01f);
             }
 

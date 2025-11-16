@@ -23,7 +23,7 @@ public class NPCManager : MovingObject
     void Start()
     {
         queue = new Queue<string>();
-        // StartCoroutine(MoveCoroutine());
+        StartCoroutine(MoveCoroutine());
     }
 
     public void SetMove()
@@ -42,24 +42,6 @@ public class NPCManager : MovingObject
         {
             for (int i = 0; i < npcMove.direction.Length; i++)
             {
-                switch (npcMove.frequency)
-                {
-                    case 1:
-                        yield return new WaitForSeconds(4.0f);
-                        break;
-                    case 2:
-                        yield return new WaitForSeconds(3.0f);
-                        break;
-                    case 3:
-                        yield return new WaitForSeconds(2.0f);
-                        break;
-                    case 4:
-                        yield return new WaitForSeconds(1.0f);
-                        break;
-                    case 5:
-                        break;
-                }
-
                 yield return new WaitUntil(() => queue.Count < 2);
 
                 base.Move(npcMove.direction[i], npcMove.frequency);
