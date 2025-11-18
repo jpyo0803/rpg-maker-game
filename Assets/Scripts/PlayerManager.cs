@@ -22,6 +22,8 @@ public class PlayerManager : MovingObject
 
     private bool canMove = true;
 
+    public bool notMove = false;
+
     void Awake()
     {
         // StartPoint와 TransferMap 스크립트에서 MovingObject.instance로 접근을 보장 
@@ -47,7 +49,7 @@ public class PlayerManager : MovingObject
 
     IEnumerator MoveCoroutine()
     {
-        while (Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0)
+        while (Input.GetAxisRaw("Vertical") != 0 || Input.GetAxisRaw("Horizontal") != 0 && !notMove)
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -126,7 +128,7 @@ public class PlayerManager : MovingObject
     // Update is called once per frame
     void Update()
     {
-        if (canMove)
+        if (canMove && !notMove)
         {
             if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
             {
