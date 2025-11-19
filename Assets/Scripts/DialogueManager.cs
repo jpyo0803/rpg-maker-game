@@ -40,7 +40,6 @@ public class DialogueManager : MonoBehaviour
     public string enterSound;
 
     private AudioManager theAudio;
-    private OrderManager theOrder;
 
     public bool talking = false;
     private bool keyActivated = false;
@@ -49,7 +48,6 @@ public class DialogueManager : MonoBehaviour
     void Start()
     {
         theAudio = AudioManager.instance;
-        theOrder = OrderManager.instance;
 
         count = 0;
         text.text = "";
@@ -61,8 +59,6 @@ public class DialogueManager : MonoBehaviour
     public void ShowDialogue(Dialogue dialogue)
     {
         talking = true; // z키 입력 허용
-
-        theOrder.NotMove(); // 플레이어 이동 불가
 
         for (int i = 0; i < dialogue.sentences.Length; i++)
         {
@@ -87,7 +83,6 @@ public class DialogueManager : MonoBehaviour
         listDialogueWindows.Clear();
 
         talking = false;
-        theOrder.Move(); // 플레이어 이동 가능
     }
 
     IEnumerator StartDialogueCoroutine()

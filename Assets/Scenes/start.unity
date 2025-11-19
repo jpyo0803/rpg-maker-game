@@ -407,6 +407,117 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -1359343944240659447, guid: 0197f68e9fe60bf499f3e572b5113eb9, type: 3}
   m_PrefabInstance: {fileID: 102899312}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &109010377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 109010379}
+  - component: {fileID: 109010378}
+  - component: {fileID: 109010380}
+  m_Layer: 0
+  m_Name: Event(School front)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &109010378
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109010377}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 40, y: 40}
+  m_EdgeRadius: 0
+--- !u!4 &109010379
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109010377}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 193, y: 550, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &109010380
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 109010377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20640f945972ab64c81363941323fa38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Event1
+  dialogue_1:
+    sentences:
+    - gggggggggggg
+    - bbbbbbbbbbbbbbb
+    sprites:
+    - {fileID: 21300000, guid: e8cc1233614ffaf438331a9afb15362e, type: 3}
+    - {fileID: 21300000, guid: 898b54227a4e68145b5f63a63a03a11a, type: 3}
+    dialogueWindows:
+    - {fileID: 21300000, guid: 795b41903f2f0bb48a31551dbb0e1a78, type: 3}
+    - {fileID: 21300000, guid: 795b41903f2f0bb48a31551dbb0e1a78, type: 3}
+  dialogue_2:
+    sentences:
+    - zzzzzzzzzzzzzzzzz
+    - yyyyyyyyyyyyyyy
+    sprites:
+    - {fileID: 21300000, guid: e8cc1233614ffaf438331a9afb15362e, type: 3}
+    - {fileID: 21300000, guid: e8cc1233614ffaf438331a9afb15362e, type: 3}
+    dialogueWindows:
+    - {fileID: 21300000, guid: 795b41903f2f0bb48a31551dbb0e1a78, type: 3}
+    - {fileID: 21300000, guid: 795b41903f2f0bb48a31551dbb0e1a78, type: 3}
 --- !u!1 &123178743
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,6 +923,7 @@ MonoBehaviour:
   walkSound_3: footsteps 3
   walkSound_4: footsteps 4
   runSpeed: 2.4
+  notMove: 0
 --- !u!1 &210053496
 GameObject:
   m_ObjectHideFlags: 0
@@ -1950,121 +2062,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &1041073989
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1041073991}
-  - component: {fileID: 1041073992}
-  - component: {fileID: 1041073993}
-  m_Layer: 0
-  m_Name: Test
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1041073991
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041073989}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 336, y: -120, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1041073992
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041073989}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 40, y: 40}
-  m_EdgeRadius: 0
---- !u!114 &1041073993
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1041073989}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bc7aeef185c2d7439fd2ae35cef3fe1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TestDialogue
-  dialogue:
-    sentences:
-    - 'aaaaaaaaaaaaa
-
-      aaaaaaaaaaaaa'
-    - 'bbbbbbbbbbbb
-
-      bbbbbbbbbbbb'
-    - 'ccccccccccccc
-
-      ccccccccccccc'
-    - 'ddddddddddd
-
-      dddddddddddd'
-    sprites:
-    - {fileID: 21300000, guid: e8cc1233614ffaf438331a9afb15362e, type: 3}
-    - {fileID: 21300000, guid: e8cc1233614ffaf438331a9afb15362e, type: 3}
-    - {fileID: 21300000, guid: 898b54227a4e68145b5f63a63a03a11a, type: 3}
-    - {fileID: 21300000, guid: 25c39e4da6a8a554f967be4287f107e9, type: 3}
-    dialogueWindows:
-    - {fileID: 21300000, guid: 795b41903f2f0bb48a31551dbb0e1a78, type: 3}
-    - {fileID: 21300000, guid: 795b41903f2f0bb48a31551dbb0e1a78, type: 3}
-    - {fileID: 21300000, guid: 795b41903f2f0bb48a31551dbb0e1a78, type: 3}
-    - {fileID: 21300000, guid: 3cd146ccb7acfdc40abf969444d9bb7c, type: 3}
 --- !u!1 &1243812696
 GameObject:
   m_ObjectHideFlags: 0
@@ -2802,7 +2799,7 @@ SceneRoots:
   - {fileID: 1362272769}
   - {fileID: 1243812698}
   - {fileID: 57200596}
-  - {fileID: 1041073991}
   - {fileID: 1322968007}
   - {fileID: 468248983}
   - {fileID: 554556756}
+  - {fileID: 109010379}
