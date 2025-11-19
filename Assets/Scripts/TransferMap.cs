@@ -25,6 +25,7 @@ public class TransferMap : MonoBehaviour
         if (collision.gameObject.name == "Player")
         {
             thePlayer.currentMapName = transferMapName; // 이동할 맵 이름 저장
+            Debug.Log("Transfer to " + transferMapName);
 
             // 카메라 및 플레이어 위치 이동
             theCamera.transform.position = new Vector3(target.position.x, target.position.y, theCamera.transform.position.z);
