@@ -9,6 +9,7 @@ public class Event1 : MonoBehaviour
     private DialogueManager theDM;
     private OrderManager theOrder;
     private PlayerManager thePlayer;
+    private FadeManager theFade;
 
     private bool flag; // false
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -17,6 +18,7 @@ public class Event1 : MonoBehaviour
         theDM = DialogueManager.instance;
         theOrder = OrderManager.instance;
         thePlayer = PlayerManager.instance;
+        theFade = FadeManager.instance;
     }
 
     void OnTriggerStay2D(Collider2D collision)
@@ -43,6 +45,8 @@ public class Event1 : MonoBehaviour
         theOrder.Move("player", "Up");
 
         yield return new WaitUntil(() => thePlayer.queue.Count == 0);
+
+        theFade.Flash();
 
         theDM.ShowDialogue(dialogue_2);
 
