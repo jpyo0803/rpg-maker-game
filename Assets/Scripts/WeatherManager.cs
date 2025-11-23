@@ -40,8 +40,8 @@ public class WeatherManager : MonoBehaviour
         theAudio.Stop(rainSound);
     }
 
-    // public void RainDrop()
-    // {
-    //     rain.Emit(10);
-    // }
+    public void RainDrop()
+    {
+        rain.Emit(10);
+    }
 }
