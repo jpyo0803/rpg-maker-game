@@ -10,28 +10,19 @@ public class TestMove
 
 public class Test : MonoBehaviour
 {
-    // [SerializeField]
-    // public TestMove[] testMove;
+    public GameObject go;
 
-    public string direction;
-    private OrderManager theOrder;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        theOrder = OrderManager.instance;
-    }
+    private bool flag;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Player")
-        {
-            theOrder.PreLoadCharacters();
-            // for (int i = 0; i < testMove.Length; i++)
-            // {
-            //     theOrder.Move(testMove[i].name, testMove[i].direction);
-            // }
-            theOrder.Turn("npc1", direction);
+        if (!flag)
+        {   
+            if (collision.gameObject.name == "Player")
+            {
+                flag = true;
+                go.SetActive(true);
+            }
         }
     }
 }
