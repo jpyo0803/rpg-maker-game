@@ -1,28 +1,38 @@
+using System;
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[System.Serializable]
-public class TestMove
-{
-    public string name;
-    public string direction;
-}
-
 public class Test : MonoBehaviour
 {
-    public GameObject go;
+    [SerializeField]
+    public Choice choice;
+    private OrderManager theOrder;
+    private ChoiceManager theChoice;
 
-    private bool flag;
+    public bool flag = false;
 
+    void Start()
+    {
+        theOrder = OrderManager.instance;
+        theChoice = ChoiceManager.instance;
+    }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!flag)
         {   
-            if (collision.gameObject.name == "Player")
-            {
-                flag = true;
-                go.SetActive(true);
-            }
+            StartCoroutine(ACoroutine());
         }
+    }
+
+    IEnumerator ACoroutine()
+    {
+        flag = true;
+        theOrder.NotMove();
+        theChoice.ShowChoice(choice);
+        yield return new WaitUntil(() => !theChoice.choiceIng);
+        Debug.Log("Selected answer index: " + theChoice.GetResult());
+        theOrder.Move();
+        flag = false;
     }
 }
