@@ -5,17 +5,17 @@ using UnityEngine;
 
 public class Test : MonoBehaviour
 {
-    [SerializeField]
-    public Choice choice;
     private OrderManager theOrder;
-    private ChoiceManager theChoice;
+    private NumberSystem theNumber;
 
     public bool flag = false;
+
+    public int correctNumber = 345;
 
     void Start()
     {
         theOrder = OrderManager.instance;
-        theChoice = ChoiceManager.instance;
+        theNumber = NumberSystem.instance;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -29,10 +29,8 @@ public class Test : MonoBehaviour
     {
         flag = true;
         theOrder.NotMove();
-        theChoice.ShowChoice(choice);
-        yield return new WaitUntil(() => !theChoice.choiceIng);
-        Debug.Log("Selected answer index: " + theChoice.GetResult());
+        theNumber.ShowNumber(correctNumber);
+        yield return new WaitUntil(() => theNumber.activated == false);
         theOrder.Move();
-        flag = false;
     }
 }
