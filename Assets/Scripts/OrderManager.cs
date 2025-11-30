@@ -97,6 +97,32 @@ public class OrderManager : MonoBehaviour
             }
         }
     }
+
+    public void SetTransparent(string _name)
+    {
+        for (int i = 0; i < characters.Count; i++)
+        {
+            if (characters[i].characterName == _name)
+            {
+                Color color = characters[i].GetComponent<SpriteRenderer>().color;
+                color.a = 0f;
+                characters[i].GetComponent<SpriteRenderer>().color = color;
+            }
+        }
+    }
+
+    public void UnsetTransparent(string _name)
+    {
+        for (int i = 0; i < characters.Count; i++)
+        {
+            if (characters[i].characterName == _name)
+            {
+                Color color = characters[i].GetComponent<SpriteRenderer>().color;
+                color.a = 1f;
+                characters[i].GetComponent<SpriteRenderer>().color = color;
+            }
+        }
+    }
     
     public void Move(string _name, string _dir)
     {

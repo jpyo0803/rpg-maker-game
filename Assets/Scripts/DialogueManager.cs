@@ -43,6 +43,7 @@ public class DialogueManager : MonoBehaviour
 
     public bool talking = false;
     private bool keyActivated = false;
+    private bool onlyText = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -56,9 +57,23 @@ public class DialogueManager : MonoBehaviour
         listDialogueWindows = new List<Sprite>();
     }
 
+    public void ShowText(string[] _sentences)
+    {
+        talking = true; // z키 입력 허용
+        onlyText = true;
+
+        for (int i = 0; i < _sentences.Length; i++)
+        {
+            listSentences.Add(_sentences[i]);
+        }
+
+        StartCoroutine(StartTextCoroutine());
+    }
+
     public void ShowDialogue(Dialogue dialogue)
     {
         talking = true; // z키 입력 허용
+        onlyText = false;
 
         for (int i = 0; i < dialogue.sentences.Length; i++)
         {
@@ -83,6 +98,20 @@ public class DialogueManager : MonoBehaviour
         listDialogueWindows.Clear();
 
         talking = false;
+    }
+
+    IEnumerator StartTextCoroutine()
+    {
+        keyActivated = true; // z키 입력 허용
+        for (int i = 0; i < listSentences[count].Length; i++)
+        {
+            text.text += listSentences[count][i]; // 한 글자씩 출력
+            if (i % 7 == 1) // 글자 출력 사운드 재생
+            {
+                theAudio.Play(typeSound);
+            }
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 
     IEnumerator StartDialogueCoroutine()
@@ -153,7 +182,10 @@ public class DialogueManager : MonoBehaviour
                 else
                 {
                     StopAllCoroutines();
-                    StartCoroutine(StartDialogueCoroutine());
+                    if (onlyText)
+                        StartCoroutine(StartTextCoroutine());
+                    else
+                        StartCoroutine(StartDialogueCoroutine());
                 }
             }
         }
