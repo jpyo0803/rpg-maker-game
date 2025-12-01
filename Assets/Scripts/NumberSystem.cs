@@ -33,7 +33,6 @@ public class NumberSystem : MonoBehaviour
     {
         if (instance == null)
         {
-            DontDestroyOnLoad(this.gameObject);
             instance = this;
         }
         else
